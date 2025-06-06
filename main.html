@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Rishabh Karpe, an IoT and software developer specializing in automation, Python, and web technologies.">
+    <meta name="keywords" content="IoT, Python, automation, software development, Rishabh Karpe">
+    <title>Rishabh Karpe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@300..700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Dark mode colors */
+            --bg-primary: #0D1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #000;
+            --text-primary: #C9D1D9;
+            --text-secondary: #ccc;
+            --accent-primary: #00FFFF;
+            --accent-secondary: #007BFF;
+            --accent-tertiary: #8A2BE2;
+            --header-bg: rgba(13, 17, 23, 0.95);
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(0, 123, 255, 0.2);
+            --shadow-color: rgba(0,123,255,0.2);
+            /* Vinyl player colors for dark mode */
+            --vinyl-bg: linear-gradient(145deg, #2d3436, #4a5568);
+            --vinyl-button: linear-gradient(145deg, var(--accent-primary), var(--accent-secondary));
+            --vinyl-turntable: linear-gradient(145deg, #4a5568, var(--accent-secondary));
+            --vinyl-platter: linear-gradient(145deg, #1a202c, #2d3748);
+            --vinyl-disc: radial-gradient(circle, var(--accent-primary) 8px, var(--accent-primary) 12px, #2f3542 12px, #2f3542 20px, #1e2328 20px, #000000 40px, #1a1a1a 80px, #000000 100%);
+            --vinyl-center: var(--accent-primary);
+            --vinyl-tonearm: linear-gradient(90deg, var(--accent-secondary), var(--accent-tertiary));
+            --vinyl-headshell: linear-gradient(145deg, #a0aec0, #718096);
+            --vinyl-needle: var(--accent-primary);
+            --vinyl-volume: #2d3436;
+            --vinyl-thumb: var(--accent-primary);
+        }
+
+        [data-theme="light"] {
+            /* Light mode colors */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F7FAFC;
+            --bg-tertiary: #EDF2F7;
+            --text-primary: #2D3748;
+            --text-secondary: #4A5568;
+            --accent-primary: #667EEA;
+            --accent-secondary: #5A67D8;
+            --accent-tertiary: #4FACFE;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --card-bg: #FFFFFF;
+            --card-border: #E2E8F0;
+            --shadow-color: rgba(102, 126, 234, 0.15);
+            /* Vinyl player colors for light theme */
+            --vinyl-bg: linear-gradient(145deg, #edf2f7, #ffffff);
+            --vinyl-button: linear-gradient(145deg, var(--accent-primary), var(--accent-tertiary));
+            --vinyl-turntable: linear-gradient(145deg, #e2e8f0, var(--accent-secondary));
+            --vinyl-platter: linear-gradient(145deg, #e2e8f0, #cbd5e0);
+            --vinyl-disc: radial-gradient(circle, var(--accent-primary) 8px, var(--accent-primary) 12px, #a0aec0 12px, #a0aec0 20px, #718096 20px, #4a5568 40px, #2d3748 80px, #4a5568 100%);
+            --vinyl-center: var(--accent-primary);
+            --vinyl-tonearm: linear-gradient(90deg, var(--accent-secondary), var(--accent-tertiary));
+            --vinyl-headshell: linear-gradient(145deg, #edf2f7, #e2e8f0);
+            --vinyl-needle: var(--accent-primary);
+            --vinyl-volume: #a0aec0;
+            --vinyl-thumb: var(--accent-primary);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            cursor: pointer;
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 22px;
+            height: 22px;
+            background: #007BFF;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        [data-theme="light"] .theme-toggle::before {
+            transform: translateX(28px);
+            background: #007BFF;
+        }
+
+        .theme-toggle::after {
+            content: '🌙';
+            position: absolute;
+            top: 50%;
+            left: 8px;
+            transform: translateY(-50%);
+            font-size: 12px;
+            transition: opacity 0.3s ease;
+        }
+
+        [data-theme="light"] .theme-toggle::after {
+            content: '☀️';
+            left: auto;
+            right: 8px;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px var(--shadow-color);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-family: "Teko", sans-serif;
+            font-size: 2rem;
+            font-weight: normal;
+            color: #007BFF;
+            text-decoration: none;
+            font-style: italic;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .download-cv {
+            background: #007BFF;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .download-cv:hover {
+            background: #007BFF;
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text {
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .designer-text {
+            color: var(--text-primary);
+        }
+
+        .coder-text {
+            color: #007BFF;
+            font-weight: 400;
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            transition: color 0.3s ease;
+        }
+
+        .hero-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .portrait {
+            width: 400px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px var(--shadow-color);
+            border: 1px solid var(--card-border);
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portrait::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><defs><linearGradient id="face" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23C9D1D9"/><stop offset="100%" style="stop-color:%23a0aec0"/></linearGradient></defs><ellipse cx="200" cy="180" rx="80" ry="100" fill="url(%23face)"/><circle cx="180" cy="160" r="8" fill="%23333"/><circle cx="220" cy="160" r="8" fill="%23333"/><path d="M180 200 Q200 220 220 200" stroke="%23333" stroke-width="3" fill="none"/><rect x="150" y="80" width="100" height="80" rx="40" fill="%23333"/></svg>') center/contain no-repeat;
+        }
+
+        [data-theme="light"] .portrait::before {
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><defs><linearGradient id="face" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234A5568"/><stop offset="100%" style="stop-color:%236b7280"/></linearGradient></defs><ellipse cx="200" cy="180" rx="80" ry="100" fill="url(%23face)"/><circle cx="180" cy="160" r="8" fill="%23FFFFFF"/><circle cx="220" cy="160" r="8" fill="%23FFFFFF"/><path d="M180 200 Q200 220 220 200" stroke="%23FFFFFF" stroke-width="3" fill="none"/><rect x="150" y="80" width="100" height="80" rx="40" fill="%232D3748"/></svg>') center/contain no-repeat;
+        }
+
+        .color-splash {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.8;
+        }
+
+        .splash-1 {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            top: 20%;
+            left: 10%;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .splash-2 {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, var(--accent-tertiary), var(--accent-secondary));
+            top: 60%;
+            right: 15%;
+            animation: float 3s ease-in-out infinite 1s;
+        }
+
+        .splash-3 {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-tertiary));
+            bottom: 30%;
+            left: 20%;
+            animation: float 3s ease-in-out infinite 2s;
+        }
+
+        [data-theme="light"] .splash-1 {
+            background: linear-gradient(45deg, #667EEA, #764BA2);
+        }
+
+        [data-theme="light"] .splash-2 {
+            background: linear-gradient(45deg, #F093FB, #F5576C);
+        }
+
+        [data-theme="light"] .splash-3 {
+            background: linear-gradient(45deg, #4FACFE, #00F2FE);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: 100px 0;
+            background: var(--bg-primary);
+            transition: background-color 0.3s ease;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .skill-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px var(--shadow-color);
+            border-color: var(--accent-primary);
+        }
+
+        .skill-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+            color: var(--bg-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .skill-card:nth-child(2) .skill-icon {
+            background: var(--accent-secondary);
+        }
+
+        .skill-card:nth-child(3) .skill-icon {
+            background: var(--accent-tertiary);
+        }
+
+        [data-theme="light"] .skill-card:nth-child(2) .skill-icon {
+            background: #F093FB;
+        }
+
+        [data-theme="light"] .skill-card:nth-child(3) .skill-icon {
+            background: #4FACFE;
+        }
+
+        .skill-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .skill-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            opacity: 0.9;
+            transition: color 0.3s ease;
+        }
+
+        .skill-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .skill-list li {
+            padding: 0.3rem 0;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            position: relative;
+            padding-left: 15px;
+            opacity: 0.9;
+            transition: color 0.3s ease;
+        }
+
+        .skill-list li::before {
+            content: '•';
+            color: var(--accent-primary);
+            position: absolute;
+            left: 0;
+        }
+
+        .skill-card:nth-child(2) .skill-list li::before {
+            color: var(--accent-secondary);
+        }
+
+        .skill-card:nth-child(3) .skill-list li::before {
+            color: var(--accent-tertiary);
+        }
+
+        [data-theme="light"] .skill-card:nth-child(2) .skill-list li::before {
+            color: #F093FB;
+        }
+
+        [data-theme="light"] .skill-card:nth-child(3) .skill-list li::before {
+            color: #4FACFE;
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 100px 0;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            text-align: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .experience-title {
+            font-size: 4rem;
+            font-weight: 300;
+            margin-bottom: 2rem;
+            letter-spacing: -2px;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .experience-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            transition: color 0.3s ease;
+        }
+
+        .company-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .company-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #007BFF;
+            opacity: 0.8;
+            transition: opacity 0.3s ease, color 0.3s ease;
+        }
+
+        .company-logo:hover {
+            opacity: 1;
+            color: var(--accent-primary);
+        }
+
+        .timeline-bar {
+            width: 80%;
+            height: 2px;
+            background: var(--card-border);
+            margin: 0 auto;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .timeline-progress {
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        /* In Progress Section */
+        .in-progress {
+            padding: 100px 0;
+            background: var(--bg-primary);
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: var(--accent-primary);
+            transition: color 0.3s ease;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+            transition: color 0.3s ease;
+        }
+
+        .projects-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 4rem;
+            align-items: center;
+        }
+
+        .project-info {
+            text-align: left;
+        }
+
+        .project-name {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .project-type {
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .project-mockup {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .mockup-tablet {
+            width: 200px;
+            height: 150px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+        }
+
+        .mockup-phone {
+            width: 120px;
+            height: 200px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            border: 1px solid var(--card-border);
+            transition: all 0.3s ease;
+        }
+
+        .mockup-screen {
+            width: 90%;
+            height: 85%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-tertiary));
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease;
+        }
+
+        /* Footer */
+        .footer {
+            background: #007BFF;
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .footer-text {
+            font-size: 1.1rem;
+        }
+
+        .social-dots {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .icon {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        .social-dot {
+            width: 40px;
+            height: 40px;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .social-dot:hover {
+            background: white;
+            color: var(--accent-primary);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            padding-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Vinyl Player Styles */
+        .vinyl-player {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 200px;
+            height: 170px;
+            background: var(--vinyl-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            transform: scale(0.6);
+            transform-origin: bottom right;
+            z-index: 999;
+        }
+
+        .vinyl-player .turntable-base {
+            position: absolute;
+            top: 15px;
+            left: 25px;
+            width: 140px;
+            height: 140px;
+            background: var(--vinyl-turntable);
+            border-radius: 50%;
+            box-shadow: inset 0 6px 15px rgba(0, 0, 0, 0.3),
+                        inset 0 -6px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .vinyl-player .platter {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 120px;
+            height: 120px;
+            background: var(--vinyl-platter);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4),
+                        inset 0 2px 5px rgba(255, 255, 255, 0.1);
+        }
+
+        .vinyl-player .vinyl {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 100px;
+            height: 100px;
+            background: var(--vinyl-disc);
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+            animation-play-state: paused;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .vinyl-player .vinyl::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 8px;
+            height: 8px;
+            background: var(--vinyl-center);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .vinyl-player .vinyl.playing {
+            animation-play-state: running;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .vinyl-player .tonearm-assembly {
+            position: absolute;
+            top: -35px;
+            right: 30px;
+            width: 80px;
+            height: 80px;
+        }
+
+        .vinyl-player .tonearm-base {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            background: var(--vinyl-platter);
+            border-radius: 50%;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3),
+                        inset 0 1px 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .vinyl-player .tonearm {
+            position: absolute;
+            top: 45px;
+            right: 15px;
+            width: 80px;
+            height: 6px;
+            background: var(--vinyl-tonearm);
+            transform-origin: right center;
+            transform: rotate(25deg);
+            transition: transform 1s ease;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .vinyl-player .tonearm.playing {
+            transform: rotate(-30deg);
+        }
+
+        .vinyl-player .headshell {
+            position: absolute;
+            left: -10px;
+            top: -3px;
+            width: 16px;
+            height: 12px;
+            background: var(--vinyl-headshell);
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .vinyl-player .needle {
+            position: absolute;
+            left: -6px;
+            top: 4px;
+            width: 2px;
+            height: 8px;
+            background: var(--vinyl-needle);
+            border-radius: 1px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .vinyl-player .controls-panel {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+        }
+
+        .vinyl-player button {
+            position: absolute;
+            left: 155px;
+            top: 0px;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            background: var(--vinyl-button);
+            color: white;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .vinyl-player button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .vinyl-player .volume-control {
+            position: absolute;
+            top: 60px;
+            right: -15px;
+            rotate: -90deg;
+        }
+
+        .vinyl-player input[type="range"] {
+            width: 80px;
+            height: 4px;
+            background: var(--vinyl-volume);
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .vinyl-player input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: var(--vinyl-thumb);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .vinyl-player select {
+            margin-top: 10px;
+            font-size: 14px;
+            border-radius: 4px;
+            padding: 3px;
+            border: none;
+            background: var(--card-bg);
+            color: var(--text-primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .projects-showcase {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .company-logos {
+                gap: 2rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger { display: block; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                right: 20px;
+                background: var(--header-bg);
+                padding: 1rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 10px var(--shadow-color);
+            }
+            .nav-links.active { display: flex; }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .experience-title,
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .portrait {
+                width: 300px;
+                height: 400px;
+            }
+
+            .vinyl-player {
+                transform: scale(0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="nav-left">
+                <a href="#" class="logo">Rishabh Karpe</a>
+                <div class="hamburger" id="hamburger">☰</div>
+                <div class="theme-toggle" id="themeToggle" role="button" aria-label="Toggle between dark and light theme"></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#in-progress">Projects</a></li>
+                <li><a href="#footer">Contact</a></li>
+                <li><a href="./Rishabh Resume.pdf" class="download-cv" download="Rishabh_Resume.pdf">Download CV</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="coder-text">IoT & Software Developer</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        I build innovative solutions using IoT, Python, and web technologies to solve real-world problems like healthcare, automation, and accessibility. Passionate about creating impactful projects with clean code and user-centric design.
+                    </p>
+                    <a href="https://www.linkedin.com/in/rishabhkarpe/" class="download-cv" style="margin-top: 1rem; display: inline-block;">View LinkedIn</a>
+                </div>
+                <div class="hero-image">
+                    <div class="portrait">
+                        <div class="color-splash splash-1"></div>
+                        <div class="color-splash splash-2"></div>
+                        <div class="color-splash splash-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-icon">💻</div>
+                    <h3 class="skill-title">Programming</h3>
+                    <p class="skill-description">
+                        I develop solutions using a variety of programming languages and tools.
+                    </p>
+                    <ul class="skill-list">
+                        <li>Languages & Tools:</li>
+                        <li>HTML5, CSS3, C, C++</li>
+                        <li>Python, Java</li>
+                        <li>Raspberry Pi, Automation</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">🌐</div>
+                    <h3 class="skill-title">IoT & Automation</h3>
+                    <p class="skill-description">
+                        I specialize in IoT systems and automation for real-world applications.
+                    </p>
+                    <ul class="skill-list">
+                        <li>Key Projects:</li>
+                        <li>Farm Automation</li>
+                        <li>Home Electricity Saving System</li>
+                        <li>Smart Healthcare System</li>
+                    </ul>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-icon">🎨</div>
+                    <h3 class="skill-title">Creative Design</h3>
+                    <p class="skill-description">
+                        I create engaging promotional materials as Creative Head at Ecesa Council.
+                    </p>
+                    <ul class="skill-list">
+                        <li>Experiences:</li>
+                        <li>Designed reels, posters, and digital content</li>
+                        <li>Increased audience participation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="experience">
+        <div class="container">
+            <h2 class="experience-title">EXPERIENCE</h2>
+            <p class="experience-subtitle">
+                A summary of my professional journey, showcasing roles and achievements.
+            </p>
+            
+            <div class="company-logos">
+                <div class="company-logo">Improsys</div>
+                <div class="company-logo">Ecesa Council</div>
+                <div class="company-logo">PAN IIT Hackathon Winner</div>
+            </div>
+            
+            <div class="timeline-bar">
+                <div class="timeline-progress"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="in-progress" class="in-progress">
+        <div class="container">
+            <h2 class="section-title">Top Projects</h2>
+            <p class="section-subtitle">
+                A showcase of my recent projects, demonstrating my skills in IoT, automation, and software development.
+            </p>
+            
+            <div class="projects-showcase">
+                <div class="project-info">
+                    <h3 class="project-name">Basic Communication for Paralyzed Patients</h3>
+                    <p class="project-type">Assistive Technology</p>
+                    <p class="project-description">
+                        Developed a system using Python, Open-CV, and Raspberry Pi to track eye movements of paralyzed patients, enabling basic communication via a speaker output.
+                    </p>
+                    <a href="https://github.com/rishikarpe/Basic-communication-for-paralysed" class="download-cv" style="margin-top: 1rem; display: inline-block;">View on GitHub</a>
+                </div>
+                <div class="project-mockup">
+                    <div class="mockup-tablet">
+                        <div class="mockup-screen"></div>
+                    </div>
+                    <div class="mockup-phone">
+                        <div class="mockup-screen">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="projects-showcase">
+                <div class="project-info">
+                    <h3 class="project-name">IoT-Based Farm irrigation System</h3>
+                    <p class="project-type">IoT Solution</p>
+                    <p class="project-description">
+                        Built an IoT system for large-scale farms with sensor-driven irrigation control and real-time monitoring, optimizing water usage and providing data reports.
+                    </p>
+                </div>
+                <div class="project-mockup">
+                    <div class="mockup-tablet">
+                        <div class="mockup-screen"></div>
+                    </div>
+                    <div class="mockup-phone">
+                        <div class="mockup-screen">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="projects-showcase">
+                <div class="project-info">
+                    <h3 class="project-name">Smart Healthcare System</h3>
+                    <p class="project-type">Hackathon Project</p>
+                    <p class="project-description">
+                        Developed a user-friendly system at PAN IIT Hackathon 2025, enhancing website engagement by 70% with real-time DNA sequencing data visualization.
+                    </p>
+                </div>
+                <div class="project-mockup">
+                    <div class="mockup-tablet">
+                        <div class="mockup-screen"></div>
+                    </div>
+                    <div class="mockup-phone">
+                        <div class="mockup-screen">
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="footer" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    Interested in collaborating? Reach out to me!
+                </div>
+                <div class="social-dots">
+                    <a href="https://www.linkedin.com/in/rishabhkarpe/" class="social-dot" aria-label="LinkedIn profile">
+                        <img src="./assets/linkedin.png" alt="LinkedIn" class="icon">
+                    </a>
+                    <a href="https://github.com/rishikarpe" class="social-dot" aria-label="GitHub profile">
+                        <img src="./assets/github.png" alt="GitHub" class="icon">
+                    </a>
+                    <a href="mailto:karperishabh@gmail.com" class="social-dot" aria-label="Email me">
+                        <img src="./assets/gmail.png" alt="Email" class="icon">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="vinyl-player">
+        <div class="turntable-base">
+            <div class="platter">
+                <div class="vinyl" id="vinyl"></div>
+            </div>
+        </div>
+
+        <div class="tonearm-assembly">
+            <div class="tonearm-base"></div>
+            <div class="tonearm" id="tonearm">
+                <div class="headshell">
+                    <div class="needle"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-panel">
+            <button id="playPauseBtn">▶</button>
+            <select id="trackSelector">
+                <option value="./assets/track1.mp3"> 1</option>
+                <option value="./assets/track2.mp3"> 2</option>
+                <option value="./assets/track3.mp3"> 3</option>
+            </select>
+        </div>
+
+        <div class="volume-control">
+            <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="1">
+        </div>
+    </div>
+
+    <script>
+        // Portfolio JavaScript
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const newTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.classList.contains('download-cv')) {
+                    return; // Skip smooth scrolling for download links
+                }
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Vinyl Player JavaScript
+        let audio = new Audio('track1.mp3');
+        const vinyl = document.getElementById('vinyl');
+        const tonearm = document.getElementById('tonearm');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const trackSelector = document.getElementById('trackSelector');
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                vinyl.classList.add('playing');
+                tonearm.classList.add('playing');
+                playPauseBtn.textContent = '⏸';
+            } else {
+                audio.pause();
+                vinyl.classList.remove('playing');
+                tonearm.classList.remove('playing');
+                playPauseBtn.textContent = '▶';
+            }
+        });
+
+        audio.addEventListener('ended', () => {
+            vinyl.classList.remove('playing');
+            tonearm.classList.remove('playing');
+            playPauseBtn.textContent = '▶';
+        });
+
+        volumeSlider.addEventListener('input', () => {
+            audio.volume = volumeSlider.value;
+        });
+
+        trackSelector.addEventListener('change', () => {
+            const selectedTrack = trackSelector.value;
+            const wasPlaying = !audio.paused;
+
+            audio.pause();
+            audio.currentTime = 0;
+            audio.src = selectedTrack;
+
+            if (wasPlaying) {
+                audio.play();
+            }
+
+            vinyl.classList.remove('playing');
+            tonearm.classList.remove('playing');
+            playPauseBtn.textContent = '▶';
+        });
+    </script>
+</body>
+</html>
