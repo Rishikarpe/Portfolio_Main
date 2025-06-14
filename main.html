@@ -27,7 +27,7 @@
             --vinyl-button: linear-gradient(145deg, var(--accent-primary), var(--accent-secondary));
             --vinyl-turntable: linear-gradient(145deg, #4a5568, var(--accent-secondary));
             --vinyl-platter: linear-gradient(145deg, #1a202c, #2d3748);
-            --vinyl-disc: radial-gradient(circle, var(--accent-primary) 8px, var(--accent-primary) 12px, #2f3542 12px, #2f3542 20px, #1e2328 20px, #000000 40px, #1a1a1a 80px, #000000 100%);
+            --vinyl-disc: radial-gradient(circle, var(--accent-primary) 8px, var(--accent-primary) 12px, #2f3542 12px, #2f3542 20px, #1e2328 20px, #000000 40px, #1a1a1a 80 Numbered linespx, #000000 100%);
             --vinyl-center: var(--accent-primary);
             --vinyl-tonearm: linear-gradient(90deg, var(--accent-secondary), var(--accent-tertiary));
             --vinyl-headshell: linear-gradient(145deg, #a0aec0, #718096);
@@ -205,16 +205,88 @@
             color: var(--text-primary);
         }
 
+        /* Background Video Styles */
+        .background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+            filter: blur(5px);
+            transition: opacity 0.3s ease, filter 0.3s ease;
+        }
+
+        /* Section Overlay for Readability */
+        .section-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for dark mode */
+            z-index: -1;
+            transition: background 0.3s ease;
+        }
+
+        [data-theme="light"] .section-overlay {
+            background: rgba(255, 255, 255, 0.5); /* Light overlay for light mode */
+        }
+
+        /* Vignette Effect */
+        .section-vignette {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.7);
+            z-index: -1;
+            transition: box-shadow 0.3s ease;
+        }
+
+        [data-theme="light"] .section-vignette {
+            box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Fade-in Animation for Sections */
+        section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-            padding-top: 80px;
             position: relative;
             overflow: hidden;
+            padding-top: 80px;
             transition: background 0.3s ease;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            z-index: -2;
+        }
+
+        [data-theme="light"] .hero::before {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
         }
 
         .hero-content {
@@ -227,6 +299,12 @@
 
         .hero-text {
             z-index: 2;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero-title {
@@ -234,7 +312,12 @@
             font-weight: 300;
             margin-bottom: 1rem;
             color: var(--text-primary);
-            transition: color 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        [data-theme="light"] .hero-title {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .designer-text {
@@ -252,7 +335,12 @@
             margin-bottom: 2rem;
             line-height: 1.6;
             opacity: 0.9;
-            transition: color 0.3s ease;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        [data-theme="light"] .hero-subtitle {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .hero-image {
@@ -260,6 +348,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            animation: fadeInUp 1s ease forwards 0.3s;
         }
 
         .portrait {
@@ -341,8 +430,23 @@
         /* Skills Section */
         .skills {
             padding: 100px 0;
-            background: var(--bg-primary);
+            position: relative;
             transition: background-color 0.3s ease;
+        }
+
+        .skills::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            z-index: -2;
+        }
+
+        [data-theme="light"] .skills::before {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
         }
 
         .skills-grid {
@@ -361,6 +465,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             backdrop-filter: blur(10px);
+            animation: fadeInUp 1s ease forwards;
         }
 
         .skill-card:hover {
@@ -426,7 +531,7 @@
             color: var(--text-secondary);
             font-size: 0.85rem;
             position: relative;
-            padding-left:  Phillips;
+            padding-left: 20px;
             opacity: 0.9;
             transition: color 0.3s ease;
         }
@@ -457,19 +562,39 @@
         /* Experience Section */
         .experience {
             padding: 100px 0;
-            background: var(--bg-tertiary);
+            position: relative;
             color: var(--text-primary);
             text-align: center;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        .experiencel-title {
+        .experience::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+            z-index: -2;
+        }
+
+        [data-theme="light"] .experience::before {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .experience-title {
             font-size: 4rem;
             font-weight: 300;
             margin-bottom: 2rem;
             letter-spacing: -2px;
             color: var(--text-primary);
-            transition: color 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        [data-theme="light"] .experience-title {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .experience-subtitle {
@@ -480,7 +605,12 @@
             margin-left: auto;
             margin-right: auto;
             line-height: 1.6;
-            transition: color 0.3s ease;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        [data-theme="light"] .experience-subtitle {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .company-logos {
@@ -498,6 +628,7 @@
             color: #007BFF;
             opacity: 0.8;
             transition: opacity 0.3s ease, color 0.3s ease;
+            animation: fadeInUp 1s ease forwards;
         }
 
         .company-logo:hover {
@@ -523,9 +654,24 @@
         /* In Progress Section */
         .in-progress {
             padding: 100px 0;
-            background: var(--bg-primary);
+            position: relative;
             text-align: center;
             transition: background-color 0.3s ease;
+        }
+
+        .in-progress::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            z-index: -2;
+        }
+
+        [data-theme="light"] .in-progress::before {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
         }
 
         .section-title {
@@ -533,7 +679,12 @@
             font-weight: 300;
             margin-bottom: 1rem;
             color: var(--accent-primary);
-            transition: color 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        [data-theme="light"] .section-title {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .section-subtitle {
@@ -544,7 +695,12 @@
             margin-left: auto;
             margin-right: auto;
             opacity: 0.9;
-            transition: color 0.3s ease;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        [data-theme="light"] .section-subtitle {
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .projects-showcase {
@@ -557,6 +713,7 @@
 
         .project-info {
             text-align: left;
+            animation: fadeInUp 1s ease forwards;
         }
 
         .project-name {
@@ -587,6 +744,7 @@
             display: flex;
             gap: 2rem;
             align-items: center;
+            animation: fadeInUp 1s ease forwards 0.3s;
         }
 
         .mockup-tablet {
@@ -630,9 +788,24 @@
         /* Figma Prototypes Section */
         .figma-prototypes {
             padding: 100px 0;
-            background: var(--bg-primary);
+            position: relative;
             text-align: center;
             transition: background-color 0.3s ease;
+        }
+
+        .figma-prototypes::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            z-index: -2;
+        }
+
+        [data-theme="light"] .figma-prototypes::before {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
         }
 
         .figma-button {
@@ -645,6 +818,7 @@
             transition: all 0.3s ease;
             display: inline-block;
             cursor: pointer;
+            animation: fadeInUp 1s ease forwards;
         }
 
         .figma-button:hover {
@@ -1046,6 +1220,10 @@
             .vinyl-player {
                 transform: scale(0.5);
             }
+
+            .background-video {
+                display: none; /* Hide videos on smaller screens to improve performance */
+            }
         }
     </style>
 </head>
@@ -1070,6 +1248,11 @@
     </header>
 
     <section id="home" class="hero">
+        <video class="background-video" autoplay muted loop playsinline poster="./assets/hero-poster.jpg" loading="lazy">
+            <source src="./bg/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="section-overlay"></div>
+        <div class="section-vignette"></div>
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
@@ -1093,6 +1276,11 @@
     </section>
 
     <section id="skills" class="skills">
+        <video class="background-video" autoplay muted loop playsinline poster="./assets/skills-poster.jpg" loading="lazy">
+            <source src="./assets/skills-video.mp4" type="video/mp4">
+        </video>
+        <div class="section-overlay"></div>
+        <div class="section-vignette"></div>
         <div class="container">
             <div class="skills-grid">
                 <div class="skill-card">
@@ -1140,6 +1328,11 @@
     </section>
 
     <section id="experience" class="experience">
+        <video class="background-video" autoplay muted loop playsinline poster="./assets/experience-poster.jpg" loading="lazy">
+            <source src="./assets/experience-video.mp4" type="video/mp4">
+        </video>
+        <div class="section-overlay"></div>
+        <div class="section-vignette"></div>
         <div class="container">
             <h2 class="experience-title">EXPERIENCE</h2>
             <p class="experience-subtitle">
@@ -1159,6 +1352,11 @@
     </section>
 
     <section id="in-progress" class="in-progress">
+        <video class="background-video" autoplay muted loop playsinline poster="./assets/projects-poster.jpg" loading="lazy">
+            <source src="./assets/projects-video.mp4" type="video/mp4">
+        </video>
+        <div class="section-overlay"></div>
+        <div class="section-vignette"></div>
         <div class="container">
             <h2 class="section-title">Top Projects</h2>
             <p class="section-subtitle">
@@ -1229,6 +1427,11 @@
     </section>
 
     <section id="figma-prototypes" class="figma-prototypes">
+        <video class="background-video" autoplay muted loop playsinline poster="./assets/figma-poster.jpg" loading="lazy">
+            <source src="./assets/figma-video.mp4" type="video/mp4">
+        </video>
+        <div class="section-overlay"></div>
+        <div class="section-vignette"></div>
         <div class="container">
             <h2 class="section-title">Figma Prototypes</h2>
             <p class="section-subtitle">
@@ -1240,16 +1443,14 @@
 
     <div class="modal" id="figmaModal">
         <div class="modal-content">
-            <span class="modal-close" id="closeFigmaModal">&times;</span>
+            <span class="modal-close" id="closeFigmaModal">×</span>
             <h2>Figma Prototypes</h2>
             <p>
                 Here are some of my Figma prototypes showcasing my design work. Click the links below to explore interactive UI/UX designs:
             </p>
             <ul class="skill-list">
-                <li><a href="https://www.figma.com/proto/R9sJdsF29AyzZVR1H82bb4/Trial2?node-id=3-3&t=Eu2gkA2MtviSSRnr-1
-" target="_blank">Healthcare Web App Prototype</a></li>
-                <li><a href="https://www.figma.com/proto/Fi5BAy46J8tqTw69htxY1u/AgriDrip?node-id=2039-55&t=coUA71LpTzkQsqI3-1
-" target="_blank">Farm Produce Management Dashboard</a></li>
+                <li><a href="https://www.figma.com/proto/R9sJdsF29AyzZVR1H82bb4/Trial2?node-id=3-3&t=Eu2gkA2MtviSSRnr-1" target="_blank">Healthcare Web App Prototype</a></li>
+                <li><a href="https://www.figma.com/proto/Fi5BAy46J8tqTw69htxY1u/AgriDrip?node-id=2039-55&t=coUA71LpTzkQsqI3-1" target="_blank">Farm Produce Management Dashboard</a></li>
                 <li><a href="https://blockchainvotingfrontendrishabh.vercel.app/Landing/landing.html" target="_blank">BlockChain Voting system</a></li>
                 <li><a href="https://wpl-trial-irsg.vercel.app/start.html" target="_blank">WellBeing Wave: Your Ultimate fitness Buddy</a></li>
             </ul>
@@ -1415,6 +1616,20 @@
             vinyl.classList.remove('playing');
             tonearm.classList.remove('playing');
             playPauseBtn.textContent = '▶';
+        });
+
+        // Intersection Observer for Section Animations
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.2 });
+
+        sections.forEach(section => {
+            observer.observe(section);
         });
     </script>
 </body>
