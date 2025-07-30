@@ -27,7 +27,7 @@
             --vinyl-button: linear-gradient(145deg, var(--accent-primary), var(--accent-secondary));
             --vinyl-turntable: linear-gradient(145deg, #4a5568, var(--accent-secondary));
             --vinyl-platter: linear-gradient(145deg, #1a202c, #2d3748);
-            --vinyl-disc: radial-gradient(circle, var(--accent-primary) 8px, var(--accent-primary) 12px, #2f3542 12px, #2f3542 20px, #1e2328 20px, #000000 40px, #1a1a1a 80 Numbered linespx, #000000 100%);
+            --vinyl-disc: radial-gradient(circle, var(--accent-primary) 8px, var(--accent-primary) 12px, #2f3542 12px, #2f3542 20px, #1e2328 20px, #000000 40px, #1a1a1a 80px, #000000 100%);
             --vinyl-center: var(--accent-primary);
             --vinyl-tonearm: linear-gradient(90deg, var(--accent-secondary), var(--accent-tertiary));
             --vinyl-headshell: linear-gradient(145deg, #a0aec0, #718096);
@@ -156,9 +156,9 @@
         }
 
         .logo {
-            font-family: "Teko", sans-serif;
+            font-family: "Poppins", sans-serif;
             font-size: 2rem;
-            font-weight: normal;
+            font-weight: 900;
             color: #007BFF;
             text-decoration: none;
             font-style: italic;
@@ -354,77 +354,44 @@
         .portrait {
             width: 400px;
             height: 500px;
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-primary));
-            border-radius: 20px;
             position: relative;
             overflow: hidden;
+            border-radius: 20px;
             box-shadow: 0 20px 40px var(--shadow-color);
             border: 1px solid var(--card-border);
-            transition: background 0.3s ease, box-shadow 0.3s ease;
+            transition: box-shadow 0.3s ease, border 0.3s ease;
         }
 
         .portrait::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><defs><linearGradient id="face" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23C9D1D9"/><stop offset="100%" style="stop-color:%23a0aec0"/></linearGradient></defs><ellipse cx="200" cy="180" rx="80" ry="100" fill="url(%23face)"/><circle cx="180" cy="160" r="8" fill="%23333"/><circle cx="220" cy="160" r="8" fill="%23333"/><path d="M180 200 Q200 220 220 200" stroke="%23333" stroke-width="3" fill="none"/><rect x="150" y="80" width="100" height="80" rx="40" fill="%23333"/></svg>') center/contain no-repeat;
-        }
-
-        [data-theme="light"] .portrait::before {
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500"><defs><linearGradient id="face" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%234A5568"/><stop offset="100%" style="stop-color:%236b7280"/></linearGradient></defs><ellipse cx="200" cy="180" rx="80" ry="100" fill="url(%23face)"/><circle cx="180" cy="160" r="8" fill="%23FFFFFF"/><circle cx="220" cy="160" r="8" fill="%23FFFFFF"/><path d="M180 200 Q200 220 220 200" stroke="%23FFFFFF" stroke-width="3" fill="none"/><rect x="150" y="80" width="100" height="80" rx="40" fill="%232D3748"/></svg>') center/contain no-repeat;
+            content: none;
         }
 
         .color-splash {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.8;
+            display: none;
         }
 
-        .splash-1 {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
-            top: 20%;
-            left: 10%;
-            animation: float 3s ease-in-out infinite;
+        .portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            display: none;
         }
 
-        .splash-2 {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(45deg, var(--accent-tertiary), var(--accent-secondary));
-            top: 60%;
-            right: 15%;
-            animation: float 3s ease-in-out infinite 1s;
+        .portrait img.light-img {
+            display: none;
         }
 
-        .splash-3 {
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(45deg, var(--accent-primary), var(--accent-tertiary));
-            bottom: 30%;
-            left: 20%;
-            animation: float 3s ease-in-out infinite 2s;
+        .portrait img.dark-img {
+            display: block;
         }
 
-        [data-theme="light"] .splash-1 {
-            background: linear-gradient(45deg, #667EEA, #764BA2);
+        [data-theme="light"] .portrait img.light-img {
+            display: block;
         }
 
-        [data-theme="light"] .splash-2 {
-            background: linear-gradient(45deg, #F093FB, #F5576C);
-        }
-
-        [data-theme="light"] .splash-3 {
-            background: linear-gradient(45deg, #4FACFE, #00F2FE);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+        [data-theme="light"] .portrait img.dark-img {
+            display: none;
         }
 
         /* Skills Section */
@@ -1188,6 +1155,25 @@
             }
         }
 
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(100, 100, 100, 0.5);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 100, 100, 0.7);
+    }
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(100, 100, 100, 0.5) rgba(255, 255, 255, 0.1);
+    }
+
         @media (max-width: 768px) {
             .hamburger { display: block; }
             .nav-links {
@@ -1242,7 +1228,7 @@
                 <li><a href="#in-progress">Projects</a></li>
                 <li><a href="#figma-prototypes">Figma Prototypes</a></li>
                 <li><a href="#footer">Contact</a></li>
-                <li><a href="./assets/Rishabh Resume.pdf" class="download-cv" download="Rishabh_Resume.pdf">Download CV</a></li>
+                <li><a href="./assets/Rishabh Resume.pdf" class="download-cv" download="Rishabh Resume_July.pdf">Download CV</a></li>
             </ul>
         </nav>
     </header>
@@ -1266,9 +1252,8 @@
                 </div>
                 <div class="hero-image">
                     <div class="portrait">
-                        <div class="color-splash splash-1"></div>
-                        <div class="color-splash splash-2"></div>
-                        <div class="color-splash splash-3"></div>
+                        <img src="./assets/rishabh_light.png" alt="Rishabh Karpe Portrait (Light Theme)" class="light-img">
+                        <img src="./assets/rishabh_dark.png" alt="Rishabh Karpe Portrait (Dark Theme)" class="dark-img">
                     </div>
                 </div>
             </div>
@@ -1406,10 +1391,11 @@
 
             <div class="projects-showcase">
                 <div class="project-info">
-                    <h3 class="project-name">Smart Healthcare System</h3>
-                    <p class="project-type">Hackathon Project</p>
+                    <h3 class="project-name">V.I.S.T.A.  AI – Vision Integrated Smart Technology Assistant</h3>
+                    <p class="project-type">Hobby Project</p>
                     <p class="project-description">
-                        Developed a user-friendly system at PAN IIT Hackathon 2025, enhancing website engagement by 70% with real-time DNA sequencing data visualization.
+                        Created a multimodal AI assistant with speech recognition (Vosk), wake word detection (Porcupine), object detection
+(YOLOv4), and hand gesture recognition (MediaPipe). Integrated with FastAPI, Streamlit, and SocketIO for realtime interaction and modular control.
                     </p>
                 </div>
                 <div class="project-mockup">
